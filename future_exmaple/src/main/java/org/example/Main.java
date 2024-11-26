@@ -20,7 +20,7 @@ public class Main {
         //4. exception can not be handle in future
         Future<List<Integer>> future2 = service.submit(() -> {
             System.out.println("Thread :" + Thread.currentThread().getName());
-            System.out.println(10/0);
+            //System.out.println(10/0);
             return Arrays.asList(1, 2, 3);
         });
 
@@ -41,6 +41,20 @@ public class Main {
         //3. we cannot combine multiple future together
         //we can run it separately  but we can't combine them
          // future1.get() + future2.get() + future3.get();
+
+
+
+        ////***********************************////////
+        //completeble Future
+        CompletableFuture completableFuture = new CompletableFuture();
+
+        delay(1);
+        completableFuture.complete("execution complete");
+
+        //get method will still block the thread until complete the execution
+        //but we can use complete method to forcfully complete the execution.
+        Object cf = completableFuture.get();
+        System.out.println(cf);
     }
 
     private static void delay(int min){
